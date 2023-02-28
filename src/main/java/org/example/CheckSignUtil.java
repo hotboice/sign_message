@@ -1,5 +1,6 @@
 package org.example;
 
+import okhttp3.OkHttpClient;
 import org.bouncycastle.util.encoders.Hex;
 import org.jetbrains.annotations.NotNull;
 import org.web3j.abi.FunctionEncoder;
@@ -23,12 +24,18 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class CheckSignUtil {
     private static final String RECOVER_HEX = "0x1626ba7e";
     private static final String UNIPASS_PREFIXED = "\u0018UniPass Signed Message:\n";
     private static final String SIGN_RPC_ENDPOINT = "https://rpc.ankr.com/polygon_mumbai";
     private static final String SIGN_CHECK_CONTRACT = "0x6939dBfaAe305FCdA6815ebc9a297997969d39aB";
+
+    private static final OkHttpClient client = new OkHttpClient.Builder()
+        .connectTimeout(60, TimeUnit.SECONDS)
+        .writeTimeout(120, TimeUnit.SECONDS)
+        .readTimeout(60, TimeUnit.SECONDS).build();
 
     public static void main(String[] args) throws Exception {
         String address = "0x1";
@@ -53,7 +60,7 @@ public class CheckSignUtil {
     }
 
     private static boolean unipass(String messageStr, String signature, String address) throws IOException {
-        Web3j web3j = Web3j.build(new HttpService(SIGN_RPC_ENDPOINT));
+        Web3j web3j = Web3j.build(new HttpService(SIGN_RPC_ENDPOINT, client));
         byte[] sig = Hex.decode(signature.startsWith("0x") ? signature.substring(2) : signature);
         byte[] message = messageStr.getBytes(StandardCharsets.UTF_8);
         byte[] prefix = UNIPASS_PREFIXED.concat(String.valueOf(message.length)).getBytes();
