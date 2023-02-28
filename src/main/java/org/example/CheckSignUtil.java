@@ -38,15 +38,15 @@ public class CheckSignUtil {
         .readTimeout(60, TimeUnit.SECONDS).build();
 
     public static void main(String[] args) throws Exception {
-        String address = "0x1";
+        String address = "0x5B38Da6a701c568545dCfcB03FcB875f56beddC4";
 
-        String message_eip191 = "Welcome to Sugar!\n     Click to sign in and accept the Terms of Use: http://web-front.isugar.io/home\n     This request will not trigger a blockchain transaction or cost any gas fees.\n     Wallet address: 0x1\n     Nonce: rutQidLEJMgwYxfv1AgsvN\n";
-        String signature_eip191 = "0xe9406024c316fd80b3bda592473faed4e99197fc227480be2ace0e0d1753f57724e8fa88e8bb767ce188d8e8e5948ba233da117f4858a2deca14a6d3b5ad5f141b";
-        System.out.printf("eip191: %s", validSignature(message_eip191, signature_eip191, address));
+        String message_eip191 = "Welcome to Sugar!\n     Click to sign in and accept the Terms of Use: http://web-front.isugar.io/home\n     This request will not trigger a blockchain transaction or cost any gas fees.\n     Wallet address: 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4\n     Nonce: rutQidLEJMgwYxfv1AgsvN\n";
+        String signature_eip191 = "0x8365d15cb4ca84d32a66ad3c6da975f32bbb6aa347145e2ed74f29c6c006aaf80b665201b59778def00d76771fe89a7eefec75974bb630306a11e0d17ed96bde1b";
+        System.out.printf("eip191: %s%n", validSignature(message_eip191, signature_eip191, address));
 
         String message_unipass = "Welcome to UniPass!";
         String signature_unipass = "0x000001d0bdf2f92cfc6de71d00ca5413c19500ae912b215ca680bff55d2c4e971401fd2852989416ea19622985bfb57e341aa7875b17aae708dc0c03375250181ac1da1c020000003c000000640000000002007e7649ccd0315628dabe5256cd050d4ce7e1824d1217dba20cc5e3e5626553970000003c000000000000003c0000c06495b106de8a0701ff5e84d9f8a5c9d711b1b6000000280000000000000000";
-        System.out.printf("unipass: %s", validSignature(message_unipass, signature_unipass, address));
+        System.out.printf("unipass: %s%n", validSignature(message_unipass, signature_unipass, address));
     }
 
     /**
